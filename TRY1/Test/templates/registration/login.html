@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Game - Log In</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/login.css' %}" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="login-card">
+        <!-- En-tête du jeu -->
+        <header class="game-header">
+          <h1 class="game-title">Game</h1>
+        </header>
+
+        <!-- Section de connexion -->
+        <section class="login-section">
+          <h2 class="section-title">Log In</h2>
+
+          {% if form.errors %}
+          <div class="error-message">
+            Nom d'utilisateur ou mot de passe incorrect.
+          </div>
+          {% endif %}
+
+          <form method="post" class="login-form">
+            {% csrf_token %}
+
+            <div class="form-group">
+              <input
+                type="text"
+                id="username"
+                name="username"
+                placeholder="username or email"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Password"
+                required
+              />
+            </div>
+
+            <div class="forgot-password">
+              <a href="#" class="forgot-link">Forgot password? Reset</a>
+            </div>
+
+            <hr class="separator" />
+
+            <button type="submit" class="login-button">
+              <span class="button-text">Log in</span>
+            </button>
+          </form>
+        </section>
+      </div>
+    </div>
+
+    <script src="{% static 'js/login.js' %}"></script>
+  </body>
+</html>
