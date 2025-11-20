@@ -4,24 +4,16 @@ from django.db import models
 class User(models.Model):
     
     username = models.CharField(max_length=50, unique=True)
-<<<<<<< HEAD
-    passwordHash = models.CharField(max_length=255) 
-=======
     email = models.EmailField(max_length=100, unique=True)
     passwordHash = models.CharField(max_length=255) 
     Role = models.CharField(max_length=20, default='Player') # 'Player', 'Admin'
->>>>>>> 2c823b1e00dbe02827fcab2b690cf9d18c5eafb3
     ControlTimestamp = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
         return self.username
 
     class Meta:
-<<<<<<< HEAD
-        db_table = 'user'
-=======
         db_table = 'user' 
->>>>>>> 2c823b1e00dbe02827fcab2b690cf9d18c5eafb3
 
 
 class Category(models.Model):

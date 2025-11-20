@@ -1,4 +1,5 @@
 from django.shortcuts import render
+<<<<<<< HEAD
 from django.http import HttpResponse
 from rest_framework import viewsets
 from .models import PlayerScore, PlayerAnswer, QuizQuestion, GameSession, User
@@ -90,3 +91,7 @@ class LogoutAPIView(APIView):
         # Terminate the current session
         logout(request) 
         return Response({'detail': 'Successfully logged out.'}, status=status.HTTP_200_OK)
+=======
+
+# Create your views here.
+>>>>>>> 2c823b1e00dbe02827fcab2b690cf9d18c5eafb3
