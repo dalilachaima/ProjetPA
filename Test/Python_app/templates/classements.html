@@ -1,0 +1,172 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container rankings-container">
+    <div class="card p-4 shadow-lg">
+        <h1 class="text-center mb-4">🏆 Classements Globaux 🏆</h1>
+        
+        {% if rankings %}
+        <div class="rankings-table">
+            <div class="table-header">
+                <div class="rank">Rang</div>
+                <div class="player">Joueur</div>
+                <div class="score">Meilleur Score</div>
+                <div class="category">Catégorie</div>
+                <div class="date">Date</div>
+            </div>
+            
+            {% for ranking in rankings %}
+            <div class="table-row {% if forloop.counter <= 3 %}top-three{% endif %}">
+                <div class="rank">
+                    {% if forloop.counter == 1 %}🥇
+                    {% elif forloop.counter == 2 %}🥈
+                    {% elif forloop.counter == 3 %}🥉
+                    {% else %}{{ forloop.counter }}
+                    {% endif %}
+                </div>
+                <div class="player">
+                    <strong>{{ ranking.user.username }}</strong>
+                </div>
+                <div class="score">
+                    <span class="score-value">{{ ranking.score }}</span> points
+                </div>
+                <div class="category">
+                    {{ ranking.session.Category.descriptor }}
+                </div>
+                <div class="date">
+                    {{ ranking.time|date:"d/m/Y H:i" }}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="no-rankings text-center">
+            <p class="mb-4">Aucun classement disponible pour le moment.</p>
+            <p>Jouez à des parties multijoueurs pour apparaître dans les classements !</p>
+            <a href="{% url 'multiplayer_initial_setup' %}" class="btn btn-primary">
+                🎮 Commencer une Partie
+            </a>
+        </div>
+        {% endif %}
+        
+        <div class="actions text-center mt-4">
+            <a href="{% url 'main_menu' %}" class="btn btn-secondary">
+                🏠 Retour au Menu
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+.rankings-container {
+    max-width: 1000px;
+    margin: 50px auto;
+}
+
+.rankings-table {
+    margin-bottom: 30px;
+}
+
+.table-header, .table-row {
+    display: grid;
+    grid-template-columns: 80px 2fr 1fr 1fr 1fr;
+    gap: 15px;
+    padding: 15px;
+    align-items: center;
+}
+
+.table-header {
+    background: #007bff;
+    color: white;
+    font-weight: bold;
+    border-radius: 8px 8px 0 0;
+}
+
+.table-row {
+    background: white;
+    border-bottom: 1px solid #dee2e6;
+    transition: background-color 0.2s;
+}
+
+.table-row:hover {
+    background: #f8f9fa;
+}
+
+.table-row.top-three {
+    background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+    border-left: 4px solid #ffc107;
+}
+
+.table-row:nth-child(1) {
+    background: linear-gradient(135deg, #ffd700, #ffed4e);
+    border-left: 4px solid #ffcc00;
+}
+
+.table-row:nth-child(2) {
+    background: linear-gradient(135deg, #c0c0c0, #e0e0e0);
+    border-left: 4px solid #a0a0a0;
+}
+
+.table-row:nth-child(3) {
+    background: linear-gradient(135deg, #cd7f32, #d4a574);
+    border-left: 4px solid #b87333;
+}
+
+.rank {
+    font-size: 1.2em;
+    text-align: center;
+    font-weight: bold;
+}
+
+.player {
+    font-size: 1.1em;
+}
+
+.score-value {
+    font-weight: bold;
+    color: #007bff;
+    font-size: 1.1em;
+}
+
+.category {
+    color: #6c757d;
+}
+
+.date {
+    color: #6c757d;
+    font-size: 0.9em;
+}
+
+.no-rankings {
+    padding: 50px 20px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    margin: 30px 0;
+}
+
+.btn {
+    padding: 12px 30px;
+    border-radius: 25px;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+@media (max-width: 768px) {
+    .table-header, .table-row {
+        grid-template-columns: 60px 2fr 1fr;
+        font-size: 0.9em;
+    }
+    
+    .category, .date {
+        display: none;
+    }
+}
+</style>
+{% endblock %}

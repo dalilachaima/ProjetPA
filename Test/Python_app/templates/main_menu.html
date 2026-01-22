@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Accueil - Quiz Game</title>
+    <title>Menu Principal - Quiz Game</title>
     <style>
       body {
         font-family: sans-serif;
@@ -54,24 +54,6 @@
       .menu-item:hover {
         background-color: #f7e096;
       }
-      .auth-links {
-        display: flex;
-        gap: 10px;
-        justify-content: center;
-        flex-wrap: wrap;
-      }
-      .auth-links a {
-        padding: 10px 20px;
-        background-color: #007bff;
-        color: white;
-        text-decoration: none;
-        border-radius: 8px;
-        font-weight: 600;
-        transition: background-color 0.2s;
-      }
-      .auth-links a:hover {
-        background-color: #0056b3;
-      }
       .user-info {
         background-color: #e6ffed;
         border: 1px solid #b7f0c3;
@@ -88,7 +70,6 @@
       <h1>Quiz Game</h1>
       <p>Bienvenue dans le meilleur jeu de quiz en ligne !</p>
 
-      {% if user.is_authenticated %}
       <div class="user-info">
         👋 Bienvenue, <strong>{{ user.username }}</strong>! <br /><small
           ><a
@@ -98,26 +79,18 @@
           ></small
         >
       </div>
-      {% else %}
-      <div class="auth-links">
-        <a href="/login/">Se connecter</a>
-        <a href="/register/">S'inscrire</a>
-      </div>
-      {% endif %}
 
       <div class="menu">
         <a href="/offline/" class="menu-item">🎮 Mode Offline</a>
         <a href="/classements/" class="menu-item">🏆 Classements</a>
-        <a href="/multiplayer/" class="menu-item">👥 Multijoueur</a>
+        <a href="/multiplayer/" class="menu-item">👥 Multijoueur Local</a>
       </div>
 
-      {% if user.is_authenticated %}
       <a
         href="/logout/"
         style="color: #e74c3c; text-decoration: none; font-weight: 600"
         >Déconnexion</a
       >
-      {% endif %}
     </div>
   </body>
 </html>

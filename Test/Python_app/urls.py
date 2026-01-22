@@ -44,11 +44,13 @@ urlpatterns = [
     path('api/', include(router.urls)),
 
     # --- B. ROUTES WEB (rendu HTML) ---
-    path('', views.home_view, name='home'),
+    path('', auth_views.LoginView.as_view(template_name='landing.html', next_page='/menu/'), name='login'),
+    path('home/', views.home_view, name='home'),
+    path('menu/', views.main_menu_view, name='main_menu'),
 
     # Authentification Django standard (templates)
-    path('login/', auth_views.LoginView.as_view(template_name='login.html', next_page='/'), name='login'),
-    path('logout/', auth_views.LogoutView.as_view(next_page='/'), name='logout'),
+    # path('login/', auth_views.LoginView.as_view(template_name='login.html', next_page='/menu/'), name='login'),
+    path('logout/', views.logout_view, name='logout'),
 
     # Profil utilisateur
     path('profile/', views.profile_view, name='profile'),
@@ -58,7 +60,13 @@ urlpatterns = [
     path('offline/play/<int:category_id>/', views.offline_game_view, name='offline_game_view'),
 
     # Multijoueur / classements / inscription
-    path('multiplayer/', views.multiplayer_lobby_view, name='multiplayer_lobby'),
+    
+    path('multiplayer/', views.multiplayer_initial_setup, name='multiplayer_initial_setup'), 
+    path('multiplayer/lobby/', views.multiplayer_lobby_view, name='multiplayer_lobby'),
+    path('multiplayer/lobby/game/', views.multiplayer_game_start, name='multiplayer_game_start'),
+    path('multiplayer/submit-answer/', views.multiplayer_submit_answer, name='multiplayer_submit_answer'),
+    path('multiplayer/end/', views.multiplayer_end_game, name='multiplayer_end_game'),
+   
     path('classements/', views.classements_view, name='classements'),
     path('register/', views.register_view, name='register'),
 ]

@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container end-game-container">
+    <div class="card p-5 shadow-lg">
+        <h1 class="text-center mb-4">🎉 Fin de la Partie ! 🎉</h1>
+        
+        <div class="winner-announcement mb-4">
+            <h2 class="text-center" style="color: {{ winner.color }};">
+                🏆 Le gagnant est {{ winner.name }} avec {{ winner.score }} points ! 🏆
+            </h2>
+        </div>
+        
+        <div class="final-scores mb-4">
+            <h3>Classement Final</h3>
+            <div class="scores-list">
+                {% for player in players %}
+                <div class="score-item {% if player.id == winner.id %}winner{% endif %}" style="border-left: 5px solid {{ player.color }};">
+                    <div class="position">
+                        {% if forloop.counter == 1 %}🥇
+                        {% elif forloop.counter == 2 %}🥈
+                        {% elif forloop.counter == 3 %}🥉
+                        {% else %}{{ forloop.counter }}
+                        {% endif %}
+                    </div>
+                    <div class="player-info">
+                        <strong>{{ player.name }}</strong>
+                        <span class="score">{{ player.score }} points</span>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        
+        <div class="game-info mb-4">
+            <p class="text-center">
+                <small class="text-muted">
+                    Session: {{ game_session.PinCode }} | Catégorie: {{ game_session.Category.descriptor }}
+                </small>
+            </p>
+        </div>
+        
+        <div class="actions text-center">
+            <a href="{% url 'multiplayer_initial_setup' %}" class="btn btn-primary btn-lg me-3">
+                🎮 Nouvelle Partie
+            </a>
+            <a href="{% url 'main_menu' %}" class="btn btn-secondary btn-lg">
+                🏠 Retour au Menu
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+.end-game-container {
+    max-width: 800px;
+    margin: 50px auto;
+}
+
+.winner-announcement {
+    background: linear-gradient(135deg, #ffd700, #ffed4e);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+}
+
+.final-scores {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.scores-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.score-item {
+    display: flex;
+    align-items: center;
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+}
+
+.score-item:hover {
+    transform: translateY(-2px);
+}
+
+.score-item.winner {
+    background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+    border: 2px solid #4caf50;
+}
+
+.position {
+    font-size: 1.5em;
+    margin-right: 15px;
+    min-width: 40px;
+    text-align: center;
+}
+
+.player-info {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.score {
+    font-weight: bold;
+    color: #007bff;
+}
+
+.actions {
+    margin-top: 30px;
+}
+
+.btn {
+    padding: 12px 30px;
+    border-radius: 25px;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+</style>
+{% endblock %}

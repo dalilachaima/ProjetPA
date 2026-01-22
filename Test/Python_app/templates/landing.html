@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Game - Connexion</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .landing-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            max-width: 1200px;
+            width: 100%;
+            display: flex;
+            min-height: 600px;
+        }
+
+        .left-panel {
+            flex: 1;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        .left-panel h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .left-panel p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        .right-panel {
+            flex: 1;
+            padding: 60px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #f8f9fa;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            color: #6c757d;
+        }
+
+        .tab-btn.active {
+            background: #007bff;
+            color: white;
+        }
+
+        .auth-form {
+            display: none;
+        }
+
+        .auth-form.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+
+        .btn-primary {
+            background: #007bff;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        .divider {
+            text-align: center;
+            margin: 20px 0;
+            position: relative;
+            color: #6c757d;
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #e9ecef;
+        }
+
+        .divider span {
+            background: white;
+            padding: 0 15px;
+        }
+
+        .guest-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .guest-link a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .guest-link a:hover {
+            text-decoration: underline;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #f5c6cb;
+        }
+
+        @media (max-width: 768px) {
+            .landing-container {
+                flex-direction: column;
+                min-height: auto;
+            }
+
+            .left-panel {
+                padding: 40px 20px;
+            }
+
+            .left-panel h1 {
+                font-size: 2rem;
+            }
+
+            .right-panel {
+                padding: 40px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="landing-container">
+        <div class="left-panel">
+            <div class="logo">🎮</div>
+            <h1>Quiz Game</h1>
+            <p>Testez vos connaissances et défiez vos amis dans des quiz passionnants ! Choisissez parmi diverses catégories et modes de jeu.</p>
+        </div>
+
+        <div class="right-panel">
+            <div class="auth-tabs">
+                <button class="tab-btn active" onclick="showForm('login')">Connexion</button>
+                <button class="tab-btn" onclick="showForm('register')">Inscription</button>
+            </div>
+
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="error-message">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <form method="post" action="{% url 'login' %}" class="auth-form active" id="loginForm">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="login_username">Nom d'utilisateur</label>
+                    <input type="text" class="form-control" id="login_username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="login_password">Mot de passe</label>
+                    <input type="password" class="form-control" id="login_password" name="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Se connecter</button>
+            </form>
+
+            <form method="post" action="{% url 'register' %}" class="auth-form" id="registerForm">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="register_username">Nom d'utilisateur</label>
+                    <input type="text" class="form-control" id="register_username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="register_email">Email</label>
+                    <input type="email" class="form-control" id="register_email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="register_password">Mot de passe</label>
+                    <input type="password" class="form-control" id="register_password" name="password" required minlength="8">
+                </div>
+                <div class="form-group">
+                    <label for="register_confirm">Confirmer le mot de passe</label>
+                    <input type="password" class="form-control" id="register_confirm" name="confirm_password" required minlength="8">
+                </div>
+                <button type="submit" class="btn btn-primary">S'inscrire</button>
+            </form>
+
+            <div class="divider">
+                <span>ou</span>
+            </div>
+
+            <div class="guest-link">
+                <a href="#" onclick="alert('Fonctionnalité à venir')">Continuer en tant qu'invité</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showForm(formType) {
+            // Masquer tous les formulaires
+            document.querySelectorAll('.auth-form').forEach(form => {
+                form.classList.remove('active');
+            });
+
+            // Désactiver tous les boutons d'onglet
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Afficher le formulaire sélectionné
+            document.getElementById(formType + 'Form').classList.add('active');
+
+            // Activer le bouton d'onglet correspondant
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>

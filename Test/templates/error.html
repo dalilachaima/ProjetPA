@@ -1,41 +1,22 @@
-{% extends "base.html" %} {% block content %}
-<div style="text-align: center; padding: 50px">
-  <h1 style="color: #c0392b">🚨 Une Erreur Est Survenue 🚨</h1>
-  <p style="font-size: 1.2em; color: #555">
-    Impossible de charger la question.
-  </p>
+{% extends "base.html" %}
 
-  {% if message %}
-  <p
-    style="
-      background-color: #f7f7f7;
-      padding: 20px;
-      border-radius: 8px;
-      border: 1px solid #ddd;
-    "
-  >
-    Détails : <strong>{{ message }}</strong>
-  </p>
-  {% else %}
-  <p>
-    Veuillez vérifier votre configuration ou l'état de l'API de génération de
-    questions.
-  </p>
-  {% endif %}
+{% block content %}
+    <div style="text-align: center; padding: 50px;">
+        <h1 style="color: #c0392b;">🚨 Une Erreur Est Survenue 🚨</h1>
+        <p style="font-size: 1.2em; color: #555;">
+            Impossible de charger la question.
+        </p>
+        
+        {% if message %}
+            <p style="background-color: #f7f7f7; padding: 20px; border-radius: 8px; border: 1px solid #ddd;">
+                Détails : <strong>{{ message }}</strong>
+            </p>
+        {% else %}
+            <p>Veuillez vérifier votre configuration ou l'état de l'API de génération de questions.</p>
+        {% endif %}
 
-  <a
-    href="{% url 'home' %}"
-    style="
-      margin-top: 30px;
-      display: inline-block;
-      padding: 10px 20px;
-      background-color: #3498db;
-      color: white;
-      text-decoration: none;
-      border-radius: 5px;
-    "
-  >
-    Retour à l'Accueil
-  </a>
-</div>
+        <a href="{% url 'home' %}" style="margin-top: 30px; display: inline-block; padding: 10px 20px; background-color: #3498db; color: white; text-decoration: none; border-radius: 5px;">
+            Retour à l'Accueil
+        </a>
+    </div>
 {% endblock content %}

@@ -88,6 +88,12 @@
     .answer-button:disabled {
         cursor: not-allowed;
     }
+
+    .answer-button.selected {
+        background-color: #007bff;
+        color: white;
+        border-color: #0056b3;
+    }
     
     .result-message {
         margin-top: 20px;
@@ -130,6 +136,7 @@
             {% csrf_token %}
             
             <input type="hidden" name="question_id" value="{{ question.pk }}"> 
+            <input type="hidden" id="selected_answer" name="answer_id" value="">
 
             <div class="answers-container">
                 {% for answer in answers %}
@@ -146,9 +153,8 @@
                             {% endif %}
 
                             <button 
-                                type="submit" 
-                                name="answer_id" 
-                                value="{{ answer.pk }}" 
+                                type="button" 
+                                data-answer-id="{{ answer.pk }}"
                                 class="answer-button {{ button_class }}"
                                 {% if submitted %}disabled{% endif %}
                             >
@@ -159,6 +165,8 @@
                     {% endwith %}
                 {% endfor %}
             </div>
+            
+            <button type="submit" id="submit-btn" style="display: none; margin-top: 20px; padding: 10px 20px; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">Soumettre la réponse</button>
         </form>
     </div> 
     
@@ -180,8 +188,46 @@
         </a>
     {% endif %}
 
+    {% if end_game %}
+        <div class="result-message success">
+            🎉 Fin du quiz ! Votre score : {{ score }} / {{ total }}
+        </div>
+        <a href="{% url 'offline_category' %}" class="btn btn-primary" style="margin-top: 20px;">
+            Retour aux catégories
+        </a>
+    {% endif %}
+
 </div>
     
-{# Le bloc <script> a été complètement supprimé car il gérait uniquement le chronomètre #}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const answerButtons = document.querySelectorAll('.answer-button');
+        const selectedAnswerInput = document.getElementById('selected_answer');
+        const submitBtn = document.getElementById('submit-btn');
+        const form = document.querySelector('form');
+        let selectedAnswerId = null;
+
+        answerButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Retirer la classe selected des autres boutons
+                answerButtons.forEach(btn => btn.classList.remove('selected'));
+                // Ajouter la classe selected au bouton cliqué
+                this.classList.add('selected');
+                // Stocker la valeur
+                selectedAnswerId = this.getAttribute('data-answer-id');
+                selectedAnswerInput.value = selectedAnswerId;
+                // Afficher le bouton submit
+                submitBtn.style.display = 'block';
+            });
+        });
+
+        form.addEventListener('submit', function(e) {
+            if (!selectedAnswerId) {
+                e.preventDefault();
+                alert('Erreur : No answer selected');
+            }
+        });
+    });
+</script>
 
 {% endblock content %}

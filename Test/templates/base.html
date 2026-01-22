@@ -1,19 +1,26 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}QuizGame{% endblock title %}</title>
-  </head>
-  <body>
+    </head>
+<body>
     <header>
-      <nav>
-        <a href="{% url 'home' %}">Accueil</a>
-      </nav>
+        <nav>
+            <a href="{% url 'home' %}">Accueil</a>
+            
+            </nav>
     </header>
 
-    <main>{% block content %} {% endblock content %}</main>
+    <main>
+        {% block content %}
+        
+        {% endblock content %}
+    </main>
 
-    <footer></footer>
-  </body>
+    <footer>
+        
+    </footer>
+</body>
 </html>
